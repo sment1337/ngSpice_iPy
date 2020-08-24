@@ -1,0 +1,5 @@
+
+Circuit: *
+
+Warning: no nodes given: .plot coll
+Note: No ".plot", ".print", or ".fourier" lines; no simulations run
