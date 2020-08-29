@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import re
 import pandas as pd
@@ -91,6 +92,19 @@ class circuit:
         """
         tempString = re.sub(existingPattern,patternToReplace, stringToManipulate)
         return tempString
+
+    def runSim(self, dataPath='./data.dat'):
+        """
+        This method simulates the netlist saved in netlistPath and exports the data saved in dataPath
+        dataPath        string  Path and file name where the .dat file will be saved
+        """
+        if dataPath=='':
+            print('Not a valid .dat filename or path. for example please use: \'./data.dat\'')
+        else:
+            os.system('ngspice -b '+self.path+' > '+dataPath)
+            return print('done')
+
+
 
 nlst = circuit()
 nlst.getInstanceVal('rbias1')

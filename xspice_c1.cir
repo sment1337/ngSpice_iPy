@@ -4,7 +4,7 @@
 * a sinewave input at node "1", a gain of approximately -3.9, * and output on node "coll".
 *
 .tran 1e-5 2e-3
-.dc vcc 0 15 0.1
+*.dc vcc 0 15 0.1
 *
 vcc vcc 0 12.0
 vin 1 0 0.0 ac 1.0 sin(0 1 1k)
