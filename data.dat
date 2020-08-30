@@ -20,7 +20,7 @@ vcc#branch                         -0.00138042
 
 No. of Data Rows : 208
             * this circuit contains only berkeley spice3 components.
-            Transient Analysis  Sat Aug 29 22:17:52  2020
+            Transient Analysis  Sun Aug 30 04:50:45  2020
 --------------------------------------------------------------------------------
 Index   time            coll            
 --------------------------------------------------------------------------------
@@ -242,12 +242,12 @@ Index   time            coll
 206	1.992800e-03	7.174519e+00	
 207	2.000000e-03	7.003370e+00	
 
-CPU time since last call: 0.064 seconds.
+CPU time since last call: 0.061 seconds.
 
-Total CPU time: 0.064 seconds.
+Total CPU time: 0.061 seconds.
 
 Total DRAM available = 3948.773438 MB.
-DRAM currently available = 148.976562 MB.
+DRAM currently available = 121.371094 MB.
 Total ngspice program size = 14.775391 MB.
 Resident set size = 928.000 kB.
 Shared ngspice pages = 688.000 kB.

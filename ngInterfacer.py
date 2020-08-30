@@ -43,6 +43,21 @@ class circuit:
         """
         This method typesets numbers like so: 100k = 100e3; 1.2n = 1.2e-9
         """
+        if re.findall('k', stringNumberInput):
+            return np.float(stringNumberInput.split('k')[0])*1e3
+        elif re.findall('[Mm]eg', stringNumberInput):
+            temp_string = re.findall('[Mm]eg', stringNumberInput)[0]
+            return np.float(stringNumberInput.split(temp_string)[0])*1e6
+        elif re.findall('m', stringNumberInput):
+            return np.float(stringNumberInput.split('m')[0])*1e-3
+        elif re.findall('u', stringNumberInput):
+            return np.float(stringNumberInput.split('u')[0])*1e-6
+        elif re.findall('n', stringNumberInput):
+            return np.float(stringNumberInput.split('n')[0])*1e-9
+        elif re.findall('p', stringNumberInput):
+            return np.float(stringNumberInput.split('p')[0])*1e-12
+        elif re.findall('f', stringNumberInput):
+            return np.float(stringNumberInput.split('f')[0])*1e-15
 
     def getInstanceVal(self, instance=''):
         """
@@ -62,10 +77,33 @@ class circuit:
                 if re.findall('^[rlc]', tempVar[0][1]):
                     # If passive element return the value
                     value = tempVar[0][1].split('\n')[0].split(' ')[-1]
+                    value = self.typeSet(value)
                     return value
                 else:
                     print('not a passive R, L or C element')
                     return tempVar
+
+    def setInstanceVal(self, instance='', value=0):
+        """
+        This method sets the value of an instance.
+        ... Requires work, use the typeset value above to rename: p, n, u, k and M to 1e-12, ... etc.
+        """
+        if instance=='':
+            print('Empty instance signifier - skipping')
+        else:
+            tempVar = [(ind,n) for ind,n in enumerate(self.netlist) if re.findall(instance, n)]
+            if not tempVar:
+                print('Instance not found')
+            elif len(tempVar)>1:
+                print('Multiple instances found, please be more specific:')
+                print(tempVar)
+            else:
+                if re.findall('^[rlc]', tempVar[0][1]):
+                    # If passive element set the value
+                    value_2bChanged = tempVar[0][1].split('\n')[0].split(' ')[-1]
+                    newLine = self.replaceStrPat(value_2bChanged, np.str(value), tempVar[0][1])
+                    self.netlist[tempVar[0][0]] = newLine
+                    return print('the new line is: '+newLine)
 
     def getln(self, regexp='^\.'):
         """
@@ -104,11 +142,18 @@ class circuit:
             os.system('ngspice -b '+self.path+' > '+dataPath)
             return print('done')
 
-
-
-nlst = circuit()
-nlst.getInstanceVal('rbias1')
+#nlst = circuit()
+#nlst.getInstanceVal('rbias1')
 
 #asd = !ngspice -b xspice_c1.cir > data.dat
 #sim = data()
 #sim.extract()
+
+# --- Example Script ---
+#from importlib import reload
+#import ngInterfacer
+#reload(ngInterfacer)
+#from ngInterfacer import *
+#cir = circuit()
+#cir.getInstanceVal('ccouple')
+#cir.setInstanceVal('ccouple', 1e-12)
