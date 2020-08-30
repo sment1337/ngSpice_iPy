@@ -8,12 +8,12 @@
 *
 vcc vcc 0 12.0
 vin 1 0 0.0 ac 1.0 sin(0 1 1k)
-ccouple 1 base 10uF
+ccouple 1 base 5.2e-09
 rbias1 vcc base 100k
-rbias2 base 0 24k
+rbias2 base 0 10000.0
 q1 coll base emit generic
 rcollector vcc coll 3.9k
-remitter emit 0 1k
+remitter emit 0 100.0
 *
 .model generic npn
 *.print dc coll

@@ -9,16 +9,22 @@ class data:
         """
         This is a class that reads back the data from the simulator.
         fname       string      filename path to read
-
         This class, after the the extract() method is ran, returns saves in the class, index, x and y.
         To generate example data run !ngspice -b xspice_c1.cir > test.dat
+        """
+        self.readdat(fname)
+
+    def readdat(self, fname):
+        """
+        This is a function that reads the data. It whould also be used in the initialization block
+        fname       string      filename path to read
         """
         self.path = fname
         datatemp = []
         with open(fname, 'r') as fin:
             datatemp=fin.readlines()
         self.data = datatemp
-
+        
     def extract(self):
         temp = [re.findall('\d+\t', n) for n in self.data]
         extrData =  [self.data[index] for index, n in enumerate(temp) if n!=[]]
@@ -38,6 +44,19 @@ class circuit:
         with open(fname, 'r') as fin:
             netlistemp=fin.readlines()
         self.netlist = netlistemp
+        fin.close()
+
+    def writeNetlist(self, netlist=''):
+        """
+        This is a function writes the netlist file
+        netlist     list    The netlist in a "list-per-line" format where each line of the file would be an item in the list
+        """
+        if not netlist:
+            netlist = self.netlist
+        with open(self.path, 'w') as fin:
+            [fin.write(n) for n in netlist]
+        fin.close()
+#        return os.system('cat '+self.path)
 
     def typeSet(self, stringNumberInput):
         """
@@ -103,6 +122,7 @@ class circuit:
                     value_2bChanged = tempVar[0][1].split('\n')[0].split(' ')[-1]
                     newLine = self.replaceStrPat(value_2bChanged, np.str(value), tempVar[0][1])
                     self.netlist[tempVar[0][0]] = newLine
+                    self.writeNetlist()
                     return print('the new line is: '+newLine)
 
     def getln(self, regexp='^\.'):
