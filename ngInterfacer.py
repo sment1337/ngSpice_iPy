@@ -46,6 +46,18 @@ class circuit:
         self.netlist = netlistemp
         fin.close()
 
+    def netlist_parser(self, line_string=''):
+        """
+        This is a function that parses the netlist and figures out the elements in it
+        """
+        if line_string=='':
+            print('Empty line string - skipping')
+        else:
+            if re.findall('^[Rr]', line_string):
+                print('not done here yet...')
+                # A resistor class goes in here maybe??
+                # I need to generate a list of classes for all the objects I will be useing
+
     def writeNetlist(self, netlist=''):
         """
         This is a function writes the netlist file
